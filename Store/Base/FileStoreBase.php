@@ -14,6 +14,7 @@ use b8\Database\Query\Criteria;
 use b8\Exception\StoreException;
 use Octo\Store;
 use Octo\File\Model\File;
+use Octo\File\Model\FileCollection;
 
 /**
  * File Base Store
@@ -23,7 +24,7 @@ trait FileStoreBase
     protected function init()
     {
         $this->tableName = 'file';
-        $this->modelName = '\Octo\System\Model\File';
+        $this->modelName = '\Octo\File\Model\File';
         $this->primaryKey = 'id';
     }
     /**
@@ -49,6 +50,13 @@ trait FileStoreBase
         if (is_null($value)) {
             throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
         }
+        // This is the primary key, so try and get from cache:
+        $cacheResult = $this->getFromCache($value);
+
+        if (!empty($cacheResult)) {
+            return $cacheResult;
+        }
+
 
         $query = new Query($this->getNamespace('File').'\Model\File', $useConnection);
         $query->select('*')->from('file')->limit(1);
@@ -57,7 +65,11 @@ trait FileStoreBase
 
         try {
             $query->execute();
-            return $query->fetch();
+            $result = $query->fetch();
+
+            $this->setCache($value, $result);
+
+            return $result;
         } catch (PDOException $ex) {
             throw new StoreException('Could not get File by Id', 0, $ex);
         }
@@ -110,7 +122,7 @@ trait FileStoreBase
 
         try {
             $query->execute();
-            return $query->fetchAll();
+            return new FileCollection($query->fetchAll());
         } catch (PDOException $ex) {
             throw new StoreException('Could not get File by CategoryId', 0, $ex);
         }
@@ -164,7 +176,7 @@ trait FileStoreBase
 
         try {
             $query->execute();
-            return $query->fetchAll();
+            return new FileCollection($query->fetchAll());
         } catch (PDOException $ex) {
             throw new StoreException('Could not get File by UserId', 0, $ex);
         }
