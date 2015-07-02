@@ -157,4 +157,32 @@ class File extends Octo\Model
         $file = $fileStore->saveByInsert($file);
         return $file;
     }
+
+    public function getMeta($key = null)
+    {
+        $meta = json_decode($this->data['meta'], true);
+
+        if (is_null($meta) || !is_array($meta)) {
+            $meta = [];
+        }
+
+        if (is_null($key)) {
+            return $meta;
+        }
+
+        if (array_key_exists($key, $meta)) {
+            return $meta[$key];
+        }
+
+        return null;
+    }
+
+    public function setMeta($key, $value)
+    {
+        $meta = $this->getMeta();
+        $meta[$key] = $value;
+
+        $this->data['meta'] = json_encode($meta);
+        $this->setModified('meta');
+    }
 }

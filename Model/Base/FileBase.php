@@ -52,6 +52,9 @@ trait FileBase
         $this->data['size'] = null;
         $this->getters['size'] = 'getSize';
         $this->setters['size'] = 'setSize';
+        $this->data['meta'] = null;
+        $this->getters['meta'] = 'getMeta';
+        $this->setters['meta'] = 'setMeta';
 
         // Foreign keys:
         $this->getters['Category'] = 'getCategory';
@@ -195,6 +198,18 @@ trait FileBase
     public function getSize()
     {
         $rtn = $this->data['size'];
+
+        return $rtn;
+    }
+
+    /**
+    * Get the value of Meta / meta.
+    *
+    * @return string
+    */
+    public function getMeta()
+    {
+        $rtn = $this->data['meta'];
 
         return $rtn;
     }
@@ -399,6 +414,23 @@ trait FileBase
 
         $this->data['size'] = $value;
         $this->setModified('size');
+    }
+
+    /**
+    * Set the value of Meta / meta.
+    *
+    * @param $value string
+    */
+    public function setMeta($value)
+    {
+        $this->validateString('Meta', $value);
+
+        if ($this->data['meta'] === $value) {
+            return;
+        }
+
+        $this->data['meta'] = $value;
+        $this->setModified('meta');
     }
     /**
     * Get the Category model for this File by Id.

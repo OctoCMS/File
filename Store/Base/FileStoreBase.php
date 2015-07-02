@@ -106,7 +106,7 @@ trait FileStoreBase
      * @param array $options Limits, offsets, etc.
      * @param string $useConnection Connection type to use.
      * @throws StoreException
-     * @return File[]
+     * @return FileCollection
      */
     public function getByCategoryId($value, $options = [], $useConnection = 'read')
     {
@@ -160,7 +160,7 @@ trait FileStoreBase
      * @param array $options Limits, offsets, etc.
      * @param string $useConnection Connection type to use.
      * @throws StoreException
-     * @return File[]
+     * @return FileCollection
      */
     public function getByUserId($value, $options = [], $useConnection = 'read')
     {
