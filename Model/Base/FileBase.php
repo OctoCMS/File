@@ -25,9 +25,6 @@ trait FileBase
         $this->data['scope'] = null;
         $this->getters['scope'] = 'getScope';
         $this->setters['scope'] = 'setScope';
-        $this->data['category_id'] = null;
-        $this->getters['category_id'] = 'getCategoryId';
-        $this->setters['category_id'] = 'setCategoryId';
         $this->data['filename'] = null;
         $this->getters['filename'] = 'getFilename';
         $this->setters['filename'] = 'setFilename';
@@ -57,8 +54,6 @@ trait FileBase
         $this->setters['meta'] = 'setMeta';
 
         // Foreign keys:
-        $this->getters['Category'] = 'getCategory';
-        $this->setters['Category'] = 'setCategory';
         $this->getters['User'] = 'getUser';
         $this->setters['User'] = 'setUser';
     }
@@ -82,18 +77,6 @@ trait FileBase
     public function getScope()
     {
         $rtn = $this->data['scope'];
-
-        return $rtn;
-    }
-
-    /**
-    * Get the value of CategoryId / category_id.
-    *
-    * @return int
-    */
-    public function getCategoryId()
-    {
-        $rtn = $this->data['category_id'];
 
         return $rtn;
     }
@@ -249,29 +232,6 @@ trait FileBase
 
         $this->data['scope'] = $value;
         $this->setModified('scope');
-    }
-
-    /**
-    * Set the value of CategoryId / category_id.
-    *
-    * @param $value int
-    */
-    public function setCategoryId($value)
-    {
-        $this->validateInt('CategoryId', $value);
-
-        // As this is a foreign key, empty values should be treated as null:
-        if (empty($value)) {
-            $value = null;
-        }
-
-
-        if ($this->data['category_id'] === $value) {
-            return;
-        }
-
-        $this->data['category_id'] = $value;
-        $this->setModified('category_id');
     }
 
     /**
@@ -431,54 +391,6 @@ trait FileBase
 
         $this->data['meta'] = $value;
         $this->setModified('meta');
-    }
-    /**
-    * Get the Category model for this File by Id.
-    *
-    * @uses \Octo\Categories\Store\CategoryStore::getById()
-    * @uses \Octo\Categories\Model\Category
-    * @return \Octo\Categories\Model\Category
-    */
-    public function getCategory()
-    {
-        $key = $this->getCategoryId();
-
-        if (empty($key)) {
-            return null;
-        }
-
-        return Factory::getStore('Category', 'Octo\Categories')->getById($key);
-    }
-
-    /**
-    * Set Category - Accepts an ID, an array representing a Category or a Category model.
-    *
-    * @param $value mixed
-    */
-    public function setCategory($value)
-    {
-        // Is this an instance of Category?
-        if ($value instanceof \Octo\Categories\Model\Category) {
-            return $this->setCategoryObject($value);
-        }
-
-        // Is this an array representing a Category item?
-        if (is_array($value) && !empty($value['id'])) {
-            return $this->setCategoryId($value['id']);
-        }
-
-        // Is this a scalar value representing the ID of this foreign key?
-        return $this->setCategoryId($value);
-    }
-
-    /**
-    * Set Category - Accepts a Category model.
-    *
-    * @param $value \Octo\Categories\Model\Category
-    */
-    public function setCategoryObject(\Octo\Categories\Model\Category $value)
-    {
-        return $this->setCategoryId($value->getId());
     }
     /**
     * Get the User model for this File by Id.

@@ -25,8 +25,6 @@ class File extends Octo\Model
     {
         parent::__construct($initialData);
 
-        $this->categoryStore = Store::get('Category');
-
         $this->getters['url'] = 'getUrl';
         $this->getters['path'] = 'getPath';
         $this->getters['formatted_size'] = 'getFormattedSize';

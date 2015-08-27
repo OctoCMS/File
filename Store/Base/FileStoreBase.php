@@ -82,60 +82,6 @@ trait FileStoreBase
      * @throws StoreException
      * @return int
      */
-    public function getTotalForCategoryId($value, $options = [], $useConnection = 'read')
-    {
-        if (is_null($value)) {
-            throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
-        }
-
-        $query = new Query($this->getNamespace('File').'\Model\File', $useConnection);
-        $query->from('file')->where('`category_id` = :category_id');
-        $query->bind(':category_id', $value);
-
-        $this->handleQueryOptions($query, $options);
-
-        try {
-            return $query->getCount();
-        } catch (PDOException $ex) {
-            throw new StoreException('Could not get count of File by CategoryId', 0, $ex);
-        }
-    }
-
-    /**
-     * @param $value
-     * @param array $options Limits, offsets, etc.
-     * @param string $useConnection Connection type to use.
-     * @throws StoreException
-     * @return FileCollection
-     */
-    public function getByCategoryId($value, $options = [], $useConnection = 'read')
-    {
-        if (is_null($value)) {
-            throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
-        }
-
-        $query = new Query($this->getNamespace('File').'\Model\File', $useConnection);
-        $query->from('file')->where('`category_id` = :category_id');
-        $query->bind(':category_id', $value);
-
-        $this->handleQueryOptions($query, $options);
-
-        try {
-            $query->execute();
-            return new FileCollection($query->fetchAll());
-        } catch (PDOException $ex) {
-            throw new StoreException('Could not get File by CategoryId', 0, $ex);
-        }
-
-    }
-
-    /**
-     * @param $value
-     * @param array $options Offsets, limits, etc.
-     * @param string $useConnection Connection type to use.
-     * @throws StoreException
-     * @return int
-     */
     public function getTotalForUserId($value, $options = [], $useConnection = 'read')
     {
         if (is_null($value)) {

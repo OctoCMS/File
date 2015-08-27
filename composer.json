@@ -16,10 +16,6 @@
         }
     ],
 
-    "require": {
-        "octo/categories": "dev-master"
-    },
-
     "autoload": {
         "psr-4": { "Octo\\File\\": "" }
     }
