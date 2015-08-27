@@ -72,5 +72,18 @@ class FileInstallMigration extends AbstractMigration
         }
 
         $table->save();
+
+        $table->changeColumn('scope', 'string', ['limit' => 50, 'null' => true, 'default' => null]);
+        $table->changeColumn('filename', 'string', ['limit' => 250, 'null' => true, 'default' => null]);
+        $table->changeColumn('title', 'string', ['limit' => 250, 'null' => true, 'default' => null]);
+        $table->changeColumn('mime_type', 'string', ['limit' => 50, 'null' => true, 'default' => null]);
+        $table->changeColumn('extension', 'string', ['limit' => 10, 'null' => true, 'default' => null]);
+        $table->changeColumn('created_date', 'datetime', ['null' => true, 'default' => null]);
+        $table->changeColumn('updated_date', 'datetime', ['null' => true, 'default' => null]);
+        $table->changeColumn('user_id', 'integer', ['signed' => false, 'null' => true, 'default' => null]);
+        $table->changeColumn('size', 'integer', ['signed' => false, 'null' => true, 'default' => null]);
+        $table->changeColumn('meta', 'text', ['null' => true, 'default' => null]);
+
+        $table->save();
     }
 }
