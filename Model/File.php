@@ -28,6 +28,7 @@ class File extends Octo\Model
         $this->getters['url'] = 'getUrl';
         $this->getters['path'] = 'getPath';
         $this->getters['formatted_size'] = 'getFormattedSize';
+        $this->getters['is_new'] = 'getIsNew';
     }
 
     /**
@@ -183,4 +184,16 @@ class File extends Octo\Model
         $this->data['meta'] = json_encode($meta);
         $this->setModified('meta');
     }
+
+    public function getIsNew()
+    {
+        $threshold = (new \DateTime())->sub(new \DateInterval('P7D'));
+
+        if ($this->getCreatedDate() > $threshold) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
