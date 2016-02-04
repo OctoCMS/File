@@ -73,7 +73,7 @@ class FileStore extends Octo\Store
     {
         $query = 'SELECT * FROM file
                     WHERE scope = :scope
-                        AND (title LIKE \'%'.$query.'%\' OR id = \''.$query.'\')
+                        AND (title LIKE \'%'.$query.'%\' OR filename LIKE \'%'.$query.'%\' OR id = \''.$query.'\')
                     ORDER BY title ASC';
 
         $stmt = Database::getConnection('read')->prepare($query);
