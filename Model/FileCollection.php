@@ -20,7 +20,7 @@ class FileCollection extends Collection
      * @param File $value
      * @return FileCollection
      */
-    public function add($key, File $value)
+    public function addFile($key, File $value)
     {
         return parent::add($key, $value);
     }
