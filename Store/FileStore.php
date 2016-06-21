@@ -14,11 +14,9 @@ use Octo\File\Model\File;
  * File Store
  * @uses Octo\File\Store\Base\FileStoreBase
  */
-class FileStore extends Octo\Store
+class FileStore extends Base\FileStoreBase
 {
-    use Base\FileStoreBase;
-
-    /**
+	/**
      * @param $scope
      * @param string $order
      * @return array

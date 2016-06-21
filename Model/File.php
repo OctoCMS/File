@@ -15,11 +15,9 @@ use Octo;
  * File Model
  * @uses Octo\File\Model\Base\FileBaseBase
  */
-class File extends Octo\Model
+class File extends Base\FileBase
 {
-    use Base\FileBase;
-
-    protected $hash = '';
+	protected $hash = '';
 
     public function __construct($initialData = array())
     {
@@ -153,32 +151,35 @@ class File extends Octo\Model
         $file->setScope($scope);
         $file->setInfo($info);
         $file->setUserId($_SESSION['user']->getId());
-        $file = $fileStore->saveByInsert($file);
+        $file = $fileStore->insert($file);
         return $file;
     }
 
-    public function getMeta($key = null)
+    public function getMetaKey($key)
+    {
+        $meta = $this->getMetaArray();
+
+        if (!array_key_exists($key, $meta)) {
+            return null;
+        }
+
+        return $meta[$key];
+    }
+
+    public function getMetaArray() : array
     {
         $meta = json_decode($this->data['meta'], true);
 
         if (is_null($meta) || !is_array($meta)) {
-            $meta = [];
+            return [];
         }
 
-        if (is_null($key)) {
-            return $meta;
-        }
-
-        if (array_key_exists($key, $meta)) {
-            return $meta[$key];
-        }
-
-        return null;
+        return $meta;
     }
 
-    public function setMeta($key, $value)
+    public function setMetaKey($key, $value)
     {
-        $meta = $this->getMeta();
+        $meta = $this->getMetaArray();
         $meta[$key] = $value;
 
         $this->data['meta'] = json_encode($meta);

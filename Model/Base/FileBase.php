@@ -6,136 +6,152 @@
 
 namespace Octo\File\Model\Base;
 
-use b8\Store\Factory;
+use Octo\Model;
+use Octo\Store;
 
 /**
  * File Base Model
  */
-trait FileBase
+class FileBase extends Model
 {
     protected function init()
     {
-        $this->tableName = 'file';
-        $this->modelName = 'File';
+        $this->table = 'file';
+        $this->model = 'File';
 
         // Columns:
+        
         $this->data['id'] = null;
         $this->getters['id'] = 'getId';
         $this->setters['id'] = 'setId';
+        
         $this->data['scope'] = null;
         $this->getters['scope'] = 'getScope';
         $this->setters['scope'] = 'setScope';
+        
         $this->data['filename'] = null;
         $this->getters['filename'] = 'getFilename';
         $this->setters['filename'] = 'setFilename';
+        
         $this->data['title'] = null;
         $this->getters['title'] = 'getTitle';
         $this->setters['title'] = 'setTitle';
+        
         $this->data['mime_type'] = null;
         $this->getters['mime_type'] = 'getMimeType';
         $this->setters['mime_type'] = 'setMimeType';
+        
         $this->data['extension'] = null;
         $this->getters['extension'] = 'getExtension';
         $this->setters['extension'] = 'setExtension';
+        
         $this->data['created_date'] = null;
         $this->getters['created_date'] = 'getCreatedDate';
         $this->setters['created_date'] = 'setCreatedDate';
+        
         $this->data['updated_date'] = null;
         $this->getters['updated_date'] = 'getUpdatedDate';
         $this->setters['updated_date'] = 'setUpdatedDate';
+        
         $this->data['user_id'] = null;
         $this->getters['user_id'] = 'getUserId';
         $this->setters['user_id'] = 'setUserId';
+        
         $this->data['size'] = null;
         $this->getters['size'] = 'getSize';
         $this->setters['size'] = 'setSize';
+        
         $this->data['meta'] = null;
         $this->getters['meta'] = 'getMeta';
         $this->setters['meta'] = 'setMeta';
-
+        
         // Foreign keys:
+        
         $this->getters['User'] = 'getUser';
         $this->setters['User'] = 'setUser';
+        
     }
+
+    
     /**
-    * Get the value of Id / id.
-    *
-    * @return string
-    */
-    public function getId()
-    {
+     * Get the value of Id / id
+     * @return string
+     */
+
+     public function getId()
+     {
         $rtn = $this->data['id'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Scope / scope.
-    *
-    * @return string
-    */
-    public function getScope()
-    {
+     * Get the value of Scope / scope
+     * @return string
+     */
+
+     public function getScope()
+     {
         $rtn = $this->data['scope'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Filename / filename.
-    *
-    * @return string
-    */
-    public function getFilename()
-    {
+     * Get the value of Filename / filename
+     * @return string
+     */
+
+     public function getFilename()
+     {
         $rtn = $this->data['filename'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Title / title.
-    *
-    * @return string
-    */
-    public function getTitle()
-    {
+     * Get the value of Title / title
+     * @return string
+     */
+
+     public function getTitle()
+     {
         $rtn = $this->data['title'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of MimeType / mime_type.
-    *
-    * @return string
-    */
-    public function getMimeType()
-    {
+     * Get the value of MimeType / mime_type
+     * @return string
+     */
+
+     public function getMimeType()
+     {
         $rtn = $this->data['mime_type'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Extension / extension.
-    *
-    * @return string
-    */
-    public function getExtension()
-    {
+     * Get the value of Extension / extension
+     * @return string
+     */
+
+     public function getExtension()
+     {
         $rtn = $this->data['extension'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of CreatedDate / created_date.
-    *
-    * @return \DateTime
-    */
-    public function getCreatedDate()
-    {
+     * Get the value of CreatedDate / created_date
+     * @return DateTime
+     */
+
+     public function getCreatedDate()
+     {
         $rtn = $this->data['created_date'];
 
         if (!empty($rtn)) {
@@ -143,15 +159,15 @@ trait FileBase
         }
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of UpdatedDate / updated_date.
-    *
-    * @return \DateTime
-    */
-    public function getUpdatedDate()
-    {
+     * Get the value of UpdatedDate / updated_date
+     * @return DateTime
+     */
+
+     public function getUpdatedDate()
+     {
         $rtn = $this->data['updated_date'];
 
         if (!empty($rtn)) {
@@ -159,54 +175,58 @@ trait FileBase
         }
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of UserId / user_id.
-    *
-    * @return int
-    */
-    public function getUserId()
-    {
+     * Get the value of UserId / user_id
+     * @return int
+     */
+
+     public function getUserId()
+     {
         $rtn = $this->data['user_id'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Size / size.
-    *
-    * @return int
-    */
-    public function getSize()
-    {
+     * Get the value of Size / size
+     * @return int
+     */
+
+     public function getSize()
+     {
         $rtn = $this->data['size'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Meta / meta.
-    *
-    * @return string
-    */
-    public function getMeta()
-    {
+     * Get the value of Meta / meta
+     * @return array|null
+     */
+
+     public function getMeta()
+     {
         $rtn = $this->data['meta'];
 
+        $rtn = json_decode($rtn, true);
+
+        if (empty($rtn)) {
+            $rtn = null;
+        }
+
         return $rtn;
-    }
-
-
+     }
+    
+    
     /**
-    * Set the value of Id / id.
-    *
-    * Must not be null.
-    * @param $value string
-    */
-    public function setId($value)
+     * Set the value of Id / id
+     * @param $value string
+     */
+    public function setId(string $value)
     {
-        $this->validateString('Id', $value);
+
         $this->validateNotNull('Id', $value);
 
         if ($this->data['id'] === $value) {
@@ -216,15 +236,15 @@ trait FileBase
         $this->data['id'] = $value;
         $this->setModified('id');
     }
-
+    
     /**
-    * Set the value of Scope / scope.
-    *
-    * @param $value string
-    */
+     * Set the value of Scope / scope
+     * @param $value string
+     */
     public function setScope($value)
     {
-        $this->validateString('Scope', $value);
+
+
 
         if ($this->data['scope'] === $value) {
             return;
@@ -233,15 +253,15 @@ trait FileBase
         $this->data['scope'] = $value;
         $this->setModified('scope');
     }
-
+    
     /**
-    * Set the value of Filename / filename.
-    *
-    * @param $value string
-    */
+     * Set the value of Filename / filename
+     * @param $value string
+     */
     public function setFilename($value)
     {
-        $this->validateString('Filename', $value);
+
+
 
         if ($this->data['filename'] === $value) {
             return;
@@ -250,15 +270,15 @@ trait FileBase
         $this->data['filename'] = $value;
         $this->setModified('filename');
     }
-
+    
     /**
-    * Set the value of Title / title.
-    *
-    * @param $value string
-    */
+     * Set the value of Title / title
+     * @param $value string
+     */
     public function setTitle($value)
     {
-        $this->validateString('Title', $value);
+
+
 
         if ($this->data['title'] === $value) {
             return;
@@ -267,15 +287,15 @@ trait FileBase
         $this->data['title'] = $value;
         $this->setModified('title');
     }
-
+    
     /**
-    * Set the value of MimeType / mime_type.
-    *
-    * @param $value string
-    */
+     * Set the value of MimeType / mime_type
+     * @param $value string
+     */
     public function setMimeType($value)
     {
-        $this->validateString('MimeType', $value);
+
+
 
         if ($this->data['mime_type'] === $value) {
             return;
@@ -284,15 +304,15 @@ trait FileBase
         $this->data['mime_type'] = $value;
         $this->setModified('mime_type');
     }
-
+    
     /**
-    * Set the value of Extension / extension.
-    *
-    * @param $value string
-    */
+     * Set the value of Extension / extension
+     * @param $value string
+     */
     public function setExtension($value)
     {
-        $this->validateString('Extension', $value);
+
+
 
         if ($this->data['extension'] === $value) {
             return;
@@ -301,15 +321,15 @@ trait FileBase
         $this->data['extension'] = $value;
         $this->setModified('extension');
     }
-
+    
     /**
-    * Set the value of CreatedDate / created_date.
-    *
-    * @param $value \DateTime
-    */
+     * Set the value of CreatedDate / created_date
+     * @param $value DateTime
+     */
     public function setCreatedDate($value)
     {
         $this->validateDate('CreatedDate', $value);
+
 
         if ($this->data['created_date'] === $value) {
             return;
@@ -318,15 +338,15 @@ trait FileBase
         $this->data['created_date'] = $value;
         $this->setModified('created_date');
     }
-
+    
     /**
-    * Set the value of UpdatedDate / updated_date.
-    *
-    * @param $value \DateTime
-    */
+     * Set the value of UpdatedDate / updated_date
+     * @param $value DateTime
+     */
     public function setUpdatedDate($value)
     {
         $this->validateDate('UpdatedDate', $value);
+
 
         if ($this->data['updated_date'] === $value) {
             return;
@@ -335,20 +355,20 @@ trait FileBase
         $this->data['updated_date'] = $value;
         $this->setModified('updated_date');
     }
-
+    
     /**
-    * Set the value of UserId / user_id.
-    *
-    * @param $value int
-    */
+     * Set the value of UserId / user_id
+     * @param $value int
+     */
     public function setUserId($value)
     {
-        $this->validateInt('UserId', $value);
 
-        // As this is a foreign key, empty values should be treated as null:
+
+        // As this column is a foreign key, empty values should be considered null.
         if (empty($value)) {
             $value = null;
         }
+
 
 
         if ($this->data['user_id'] === $value) {
@@ -358,15 +378,15 @@ trait FileBase
         $this->data['user_id'] = $value;
         $this->setModified('user_id');
     }
-
+    
     /**
-    * Set the value of Size / size.
-    *
-    * @param $value int
-    */
+     * Set the value of Size / size
+     * @param $value int
+     */
     public function setSize($value)
     {
-        $this->validateInt('Size', $value);
+
+
 
         if ($this->data['size'] === $value) {
             return;
@@ -375,15 +395,15 @@ trait FileBase
         $this->data['size'] = $value;
         $this->setModified('size');
     }
-
+    
     /**
-    * Set the value of Meta / meta.
-    *
-    * @param $value string
-    */
+     * Set the value of Meta / meta
+     * @param $value array|null
+     */
     public function setMeta($value)
     {
-        $this->validateString('Meta', $value);
+        $this->validateJson($value);
+        $this->validateNotNull('Meta', $value);
 
         if ($this->data['meta'] === $value) {
             return;
@@ -392,33 +412,40 @@ trait FileBase
         $this->data['meta'] = $value;
         $this->setModified('meta');
     }
+    
+    
     /**
-    * Get the User model for this File by Id.
-    *
-    * @uses \Octo\System\Store\UserStore::getById()
-    * @uses \Octo\System\Model\User
-    * @return \Octo\System\Model\User
-    */
+     * Get the User model for this  by Id.
+     *
+     * @uses \Octo\System\Store\UserStore::getById()
+     * @uses \Octo\System\Model\User
+     * @return \Octo\System\Model\User
+     */
     public function getUser()
     {
         $key = $this->getUserId();
 
         if (empty($key)) {
-            return null;
+           return null;
         }
 
-        return Factory::getStore('User', 'Octo\System')->getById($key);
+        return Store::get('User')->getById($key);
     }
 
     /**
-    * Set User - Accepts an ID, an array representing a User or a User model.
-    *
-    * @param $value mixed
-    */
+     * Set User - Accepts an ID, an array representing a User or a User model.
+     * @throws \Exception
+     * @param $value mixed
+     */
     public function setUser($value)
     {
+        // Is this a scalar value representing the ID of this foreign key?
+        if (is_scalar($value)) {
+            return $this->setUserId($value);
+        }
+
         // Is this an instance of User?
-        if ($value instanceof \Octo\System\Model\User) {
+        if (is_object($value) && $value instanceof \Octo\System\Model\User) {
             return $this->setUserObject($value);
         }
 
@@ -427,17 +454,22 @@ trait FileBase
             return $this->setUserId($value['id']);
         }
 
-        // Is this a scalar value representing the ID of this foreign key?
-        return $this->setUserId($value);
+        // None of the above? That's a problem!
+        throw new \Exception('Invalid value for User.');
     }
 
     /**
-    * Set User - Accepts a User model.
-    *
-    * @param $value \Octo\System\Model\User
-    */
+     * Set User - Accepts a User model.
+     *
+     * @param $value \Octo\System\Model\User
+     */
     public function setUserObject(\Octo\System\Model\User $value)
     {
         return $this->setUserId($value->getId());
+    }
+
+    public function PageVersions()
+    {
+        return Store::get('PageVersion')->where('image_id', $this->data['id']);
     }
 }
