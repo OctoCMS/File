@@ -45,8 +45,8 @@ class FileStore extends Base\FileStoreBase
     {
         $query = 'SELECT * FROM file WHERE scope = :scope AND created_date > :date ORDER BY ' . $order;
         $stmt = Database::getConnection('read')->prepare($query);
-        $stmt->bindParam(':scope', $scope);
-        $stmt->bindParam(':date', $date->format('Y-m-d H:i:s'));
+        $stmt->bindValue(':scope', $scope);
+        $stmt->bindValue(':date', $date->format('Y-m-d H:i:s'));
 
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(\PDO::FETCH_ASSOC);
