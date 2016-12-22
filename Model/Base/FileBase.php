@@ -6,13 +6,16 @@
 
 namespace Octo\File\Model\Base;
 
+use DateTime;
+use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
+use Octo\File\Model\File;
 
 /**
  * File Base Model
  */
-class FileBase extends Model
+abstract class FileBase extends Model
 {
     protected function init()
     {
@@ -78,7 +81,7 @@ class FileBase extends Model
      * @return string
      */
 
-     public function getId()
+     public function getId() : string
      {
         $rtn = $this->data['id'];
 
@@ -90,7 +93,7 @@ class FileBase extends Model
      * @return string
      */
 
-     public function getScope()
+     public function getScope() : ?string
      {
         $rtn = $this->data['scope'];
 
@@ -102,7 +105,7 @@ class FileBase extends Model
      * @return string
      */
 
-     public function getFilename()
+     public function getFilename() : ?string
      {
         $rtn = $this->data['filename'];
 
@@ -114,7 +117,7 @@ class FileBase extends Model
      * @return string
      */
 
-     public function getTitle()
+     public function getTitle() : ?string
      {
         $rtn = $this->data['title'];
 
@@ -126,7 +129,7 @@ class FileBase extends Model
      * @return string
      */
 
-     public function getMimeType()
+     public function getMimeType() : ?string
      {
         $rtn = $this->data['mime_type'];
 
@@ -138,7 +141,7 @@ class FileBase extends Model
      * @return string
      */
 
-     public function getExtension()
+     public function getExtension() : ?string
      {
         $rtn = $this->data['extension'];
 
@@ -150,12 +153,12 @@ class FileBase extends Model
      * @return DateTime
      */
 
-     public function getCreatedDate()
+     public function getCreatedDate() : ?DateTime
      {
         $rtn = $this->data['created_date'];
 
         if (!empty($rtn)) {
-            $rtn = new \DateTime($rtn);
+            $rtn = new DateTime($rtn);
         }
 
         return $rtn;
@@ -166,12 +169,12 @@ class FileBase extends Model
      * @return DateTime
      */
 
-     public function getUpdatedDate()
+     public function getUpdatedDate() : ?DateTime
      {
         $rtn = $this->data['updated_date'];
 
         if (!empty($rtn)) {
-            $rtn = new \DateTime($rtn);
+            $rtn = new DateTime($rtn);
         }
 
         return $rtn;
@@ -182,7 +185,7 @@ class FileBase extends Model
      * @return int
      */
 
-     public function getUserId()
+     public function getUserId() : ?int
      {
         $rtn = $this->data['user_id'];
 
@@ -194,7 +197,7 @@ class FileBase extends Model
      * @return int
      */
 
-     public function getSize()
+     public function getSize() : ?int
      {
         $rtn = $this->data['size'];
 
@@ -203,10 +206,10 @@ class FileBase extends Model
     
     /**
      * Get the value of Meta / meta
-     * @return array|null
+     * @return array
      */
 
-     public function getMeta()
+     public function getMeta() : ?array
      {
         $rtn = $this->data['meta'];
 
@@ -223,146 +226,140 @@ class FileBase extends Model
     /**
      * Set the value of Id / id
      * @param $value string
+     * @return File
      */
-    public function setId(string $value)
+    public function setId(string $value) : File
     {
 
-        $this->validateNotNull('Id', $value);
-
-        if ($this->data['id'] === $value) {
-            return;
+        if ($this->data['id'] !== $value) {
+            $this->data['id'] = $value;
+            $this->setModified('id');
         }
 
-        $this->data['id'] = $value;
-        $this->setModified('id');
+        return $this;
     }
     
     /**
      * Set the value of Scope / scope
      * @param $value string
+     * @return File
      */
-    public function setScope($value)
+    public function setScope(?string $value) : File
     {
 
-
-
-        if ($this->data['scope'] === $value) {
-            return;
+        if ($this->data['scope'] !== $value) {
+            $this->data['scope'] = $value;
+            $this->setModified('scope');
         }
 
-        $this->data['scope'] = $value;
-        $this->setModified('scope');
+        return $this;
     }
     
     /**
      * Set the value of Filename / filename
      * @param $value string
+     * @return File
      */
-    public function setFilename($value)
+    public function setFilename(?string $value) : File
     {
 
-
-
-        if ($this->data['filename'] === $value) {
-            return;
+        if ($this->data['filename'] !== $value) {
+            $this->data['filename'] = $value;
+            $this->setModified('filename');
         }
 
-        $this->data['filename'] = $value;
-        $this->setModified('filename');
+        return $this;
     }
     
     /**
      * Set the value of Title / title
      * @param $value string
+     * @return File
      */
-    public function setTitle($value)
+    public function setTitle(?string $value) : File
     {
 
-
-
-        if ($this->data['title'] === $value) {
-            return;
+        if ($this->data['title'] !== $value) {
+            $this->data['title'] = $value;
+            $this->setModified('title');
         }
 
-        $this->data['title'] = $value;
-        $this->setModified('title');
+        return $this;
     }
     
     /**
      * Set the value of MimeType / mime_type
      * @param $value string
+     * @return File
      */
-    public function setMimeType($value)
+    public function setMimeType(?string $value) : File
     {
 
-
-
-        if ($this->data['mime_type'] === $value) {
-            return;
+        if ($this->data['mime_type'] !== $value) {
+            $this->data['mime_type'] = $value;
+            $this->setModified('mime_type');
         }
 
-        $this->data['mime_type'] = $value;
-        $this->setModified('mime_type');
+        return $this;
     }
     
     /**
      * Set the value of Extension / extension
      * @param $value string
+     * @return File
      */
-    public function setExtension($value)
+    public function setExtension(?string $value) : File
     {
 
-
-
-        if ($this->data['extension'] === $value) {
-            return;
+        if ($this->data['extension'] !== $value) {
+            $this->data['extension'] = $value;
+            $this->setModified('extension');
         }
 
-        $this->data['extension'] = $value;
-        $this->setModified('extension');
+        return $this;
     }
     
     /**
      * Set the value of CreatedDate / created_date
      * @param $value DateTime
+     * @return File
      */
-    public function setCreatedDate($value)
+    public function setCreatedDate($value) : File
     {
         $this->validateDate('CreatedDate', $value);
 
-
-        if ($this->data['created_date'] === $value) {
-            return;
+        if ($this->data['created_date'] !== $value) {
+            $this->data['created_date'] = $value;
+            $this->setModified('created_date');
         }
 
-        $this->data['created_date'] = $value;
-        $this->setModified('created_date');
+        return $this;
     }
     
     /**
      * Set the value of UpdatedDate / updated_date
      * @param $value DateTime
+     * @return File
      */
-    public function setUpdatedDate($value)
+    public function setUpdatedDate($value) : File
     {
         $this->validateDate('UpdatedDate', $value);
 
-
-        if ($this->data['updated_date'] === $value) {
-            return;
+        if ($this->data['updated_date'] !== $value) {
+            $this->data['updated_date'] = $value;
+            $this->setModified('updated_date');
         }
 
-        $this->data['updated_date'] = $value;
-        $this->setModified('updated_date');
+        return $this;
     }
     
     /**
      * Set the value of UserId / user_id
      * @param $value int
+     * @return File
      */
-    public function setUserId($value)
+    public function setUserId(?int $value) : File
     {
-
 
         // As this column is a foreign key, empty values should be considered null.
         if (empty($value)) {
@@ -370,47 +367,45 @@ class FileBase extends Model
         }
 
 
-
-        if ($this->data['user_id'] === $value) {
-            return;
+        if ($this->data['user_id'] !== $value) {
+            $this->data['user_id'] = $value;
+            $this->setModified('user_id');
         }
 
-        $this->data['user_id'] = $value;
-        $this->setModified('user_id');
+        return $this;
     }
     
     /**
      * Set the value of Size / size
      * @param $value int
+     * @return File
      */
-    public function setSize($value)
+    public function setSize(?int $value) : File
     {
 
-
-
-        if ($this->data['size'] === $value) {
-            return;
+        if ($this->data['size'] !== $value) {
+            $this->data['size'] = $value;
+            $this->setModified('size');
         }
 
-        $this->data['size'] = $value;
-        $this->setModified('size');
+        return $this;
     }
     
     /**
      * Set the value of Meta / meta
-     * @param $value array|null
+     * @param $value array
+     * @return File
      */
-    public function setMeta($value)
+    public function setMeta($value) : File
     {
         $this->validateJson($value);
-        $this->validateNotNull('Meta', $value);
 
-        if ($this->data['meta'] === $value) {
-            return;
+        if ($this->data['meta'] !== $value) {
+            $this->data['meta'] = $value;
+            $this->setModified('meta');
         }
 
-        $this->data['meta'] = $value;
-        $this->setModified('meta');
+        return $this;
     }
     
     
@@ -468,8 +463,4 @@ class FileBase extends Model
         return $this->setUserId($value->getId());
     }
 
-    public function PageVersions()
-    {
-        return Store::get('PageVersion')->where('image_id', $this->data['id']);
-    }
 }
