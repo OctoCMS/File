@@ -11,71 +11,100 @@ use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
 use Octo\File\Model\File;
+use Octo\File\Store\FileStore;
 
 /**
  * File Base Model
  */
 abstract class FileBase extends Model
 {
-    protected function init()
-    {
-        $this->table = 'file';
-        $this->model = 'File';
+    protected $table = 'file';
+    protected $model = 'File';
+    protected $data = [
+        'id' => null,
+        'scope' => null,
+        'filename' => null,
+        'title' => null,
+        'mime_type' => null,
+        'extension' => null,
+        'created_date' => null,
+        'updated_date' => null,
+        'user_id' => null,
+        'size' => null,
+        'meta' => null,
+    ];
 
-        // Columns:
-        
-        $this->data['id'] = null;
-        $this->getters['id'] = 'getId';
-        $this->setters['id'] = 'setId';
-        
-        $this->data['scope'] = null;
-        $this->getters['scope'] = 'getScope';
-        $this->setters['scope'] = 'setScope';
-        
-        $this->data['filename'] = null;
-        $this->getters['filename'] = 'getFilename';
-        $this->setters['filename'] = 'setFilename';
-        
-        $this->data['title'] = null;
-        $this->getters['title'] = 'getTitle';
-        $this->setters['title'] = 'setTitle';
-        
-        $this->data['mime_type'] = null;
-        $this->getters['mime_type'] = 'getMimeType';
-        $this->setters['mime_type'] = 'setMimeType';
-        
-        $this->data['extension'] = null;
-        $this->getters['extension'] = 'getExtension';
-        $this->setters['extension'] = 'setExtension';
-        
-        $this->data['created_date'] = null;
-        $this->getters['created_date'] = 'getCreatedDate';
-        $this->setters['created_date'] = 'setCreatedDate';
-        
-        $this->data['updated_date'] = null;
-        $this->getters['updated_date'] = 'getUpdatedDate';
-        $this->setters['updated_date'] = 'setUpdatedDate';
-        
-        $this->data['user_id'] = null;
-        $this->getters['user_id'] = 'getUserId';
-        $this->setters['user_id'] = 'setUserId';
-        
-        $this->data['size'] = null;
-        $this->getters['size'] = 'getSize';
-        $this->setters['size'] = 'setSize';
-        
-        $this->data['meta'] = null;
-        $this->getters['meta'] = 'getMeta';
-        $this->setters['meta'] = 'setMeta';
-        
-        // Foreign keys:
-        
-        $this->getters['User'] = 'getUser';
-        $this->setters['User'] = 'setUser';
-        
+    protected $getters = [
+        'id' => 'getId',
+        'scope' => 'getScope',
+        'filename' => 'getFilename',
+        'title' => 'getTitle',
+        'mime_type' => 'getMimeType',
+        'extension' => 'getExtension',
+        'created_date' => 'getCreatedDate',
+        'updated_date' => 'getUpdatedDate',
+        'user_id' => 'getUserId',
+        'size' => 'getSize',
+        'meta' => 'getMeta',
+        'User' => 'getUser',
+    ];
+
+    protected $setters = [
+        'id' => 'setId',
+        'scope' => 'setScope',
+        'filename' => 'setFilename',
+        'title' => 'setTitle',
+        'mime_type' => 'setMimeType',
+        'extension' => 'setExtension',
+        'created_date' => 'setCreatedDate',
+        'updated_date' => 'setUpdatedDate',
+        'user_id' => 'setUserId',
+        'size' => 'setSize',
+        'meta' => 'setMeta',
+        'User' => 'setUser',
+    ];
+
+    /**
+     * Return the database store for this model.
+     * @return FileStore
+     */
+    public static function Store() : FileStore
+    {
+        return FileStore::load();
     }
 
-    
+    /**
+     * Get File by primary key: id
+     * @param string $id
+     * @return File|null
+     */
+    public static function get(string $id) : ?File
+    {
+        return self::Store()->getById($id);
+    }
+
+    /**
+     * @throws \Exception
+     * @return File
+     */
+    public function save() : File
+    {
+        $rtn = self::Store()->save($this);
+
+        if (empty($rtn)) {
+            throw new \Exception('Failed to save File');
+        }
+
+        if (!($rtn instanceof File)) {
+            throw new \Exception('Unexpected ' . get_class($rtn) . ' received from save.');
+        }
+
+        $this->data = $rtn->toArray();
+
+        return $this;
+    }
+
+
     /**
      * Get the value of Id / id
      * @return string

@@ -7,18 +7,41 @@
 
 namespace Octo\File\Store\Base;
 
+use Block8\Database\Connection;
 use Octo\Store;
 use Octo\File\Model\File;
 use Octo\File\Model\FileCollection;
+use Octo\File\Store\FileStore;
 
 /**
  * File Base Store
  */
 class FileStoreBase extends Store
 {
+    /** @var FileStore $instance */
+    protected static $instance = null;
+
+    /** @var string */
     protected $table = 'file';
+
+    /** @var string */
     protected $model = 'Octo\File\Model\File';
+
+    /** @var string */
     protected $key = 'id';
+
+    /**
+     * Return the database store for this model.
+     * @return FileStore
+     */
+    public static function load() : FileStore
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new FileStore(Connection::get());
+        }
+
+        return self::$instance;
+    }
 
     /**
     * @param $value
