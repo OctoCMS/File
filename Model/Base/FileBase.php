@@ -10,8 +10,10 @@ use DateTime;
 use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
-use Octo\File\Model\File;
+
 use Octo\File\Store\FileStore;
+use Octo\File\Model\File;
+use Octo\System\Model\User;
 
 /**
  * File Base Model
@@ -109,7 +111,6 @@ abstract class FileBase extends Model
      * Get the value of Id / id
      * @return string
      */
-
      public function getId() : string
      {
         $rtn = $this->data['id'];
@@ -121,7 +122,6 @@ abstract class FileBase extends Model
      * Get the value of Scope / scope
      * @return string
      */
-
      public function getScope() : ?string
      {
         $rtn = $this->data['scope'];
@@ -133,7 +133,6 @@ abstract class FileBase extends Model
      * Get the value of Filename / filename
      * @return string
      */
-
      public function getFilename() : ?string
      {
         $rtn = $this->data['filename'];
@@ -145,7 +144,6 @@ abstract class FileBase extends Model
      * Get the value of Title / title
      * @return string
      */
-
      public function getTitle() : ?string
      {
         $rtn = $this->data['title'];
@@ -157,7 +155,6 @@ abstract class FileBase extends Model
      * Get the value of MimeType / mime_type
      * @return string
      */
-
      public function getMimeType() : ?string
      {
         $rtn = $this->data['mime_type'];
@@ -169,7 +166,6 @@ abstract class FileBase extends Model
      * Get the value of Extension / extension
      * @return string
      */
-
      public function getExtension() : ?string
      {
         $rtn = $this->data['extension'];
@@ -181,7 +177,6 @@ abstract class FileBase extends Model
      * Get the value of CreatedDate / created_date
      * @return DateTime
      */
-
      public function getCreatedDate() : ?DateTime
      {
         $rtn = $this->data['created_date'];
@@ -197,7 +192,6 @@ abstract class FileBase extends Model
      * Get the value of UpdatedDate / updated_date
      * @return DateTime
      */
-
      public function getUpdatedDate() : ?DateTime
      {
         $rtn = $this->data['updated_date'];
@@ -213,7 +207,6 @@ abstract class FileBase extends Model
      * Get the value of UserId / user_id
      * @return int
      */
-
      public function getUserId() : ?int
      {
         $rtn = $this->data['user_id'];
@@ -225,7 +218,6 @@ abstract class FileBase extends Model
      * Get the value of Size / size
      * @return int
      */
-
      public function getSize() : ?int
      {
         $rtn = $this->data['size'];
@@ -237,7 +229,6 @@ abstract class FileBase extends Model
      * Get the value of Meta / meta
      * @return array
      */
-
      public function getMeta() : ?array
      {
         $rtn = $this->data['meta'];
@@ -437,15 +428,15 @@ abstract class FileBase extends Model
         return $this;
     }
     
-    
+
     /**
      * Get the User model for this  by Id.
      *
      * @uses \Octo\System\Store\UserStore::getById()
-     * @uses \Octo\System\Model\User
-     * @return \Octo\System\Model\User
+     * @uses User
+     * @return User|null
      */
-    public function getUser()
+    public function getUser() : ?User
     {
         $key = $this->getUserId();
 
@@ -453,15 +444,16 @@ abstract class FileBase extends Model
            return null;
         }
 
-        return Store::get('User')->getById($key);
+        return User::Store()->getById($key);
     }
 
     /**
      * Set User - Accepts an ID, an array representing a User or a User model.
      * @throws \Exception
      * @param $value mixed
+     * @return File
      */
-    public function setUser($value)
+    public function setUser($value) : File
     {
         // Is this a scalar value representing the ID of this foreign key?
         if (is_scalar($value)) {
@@ -469,7 +461,7 @@ abstract class FileBase extends Model
         }
 
         // Is this an instance of User?
-        if (is_object($value) && $value instanceof \Octo\System\Model\User) {
+        if (is_object($value) && $value instanceof User) {
             return $this->setUserObject($value);
         }
 
@@ -485,11 +477,11 @@ abstract class FileBase extends Model
     /**
      * Set User - Accepts a User model.
      *
-     * @param $value \Octo\System\Model\User
+     * @param $value User
+     * @return File
      */
-    public function setUserObject(\Octo\System\Model\User $value)
+    public function setUserObject(User $value) : File
     {
         return $this->setUserId($value->getId());
     }
-
 }
